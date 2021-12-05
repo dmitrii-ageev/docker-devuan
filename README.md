@@ -1,2 +1,2 @@
 # docker-devuan
-Devuan linux distrubution Docker image
+Devuan linux distribution Docker image
