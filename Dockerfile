@@ -28,6 +28,9 @@ RUN apt-get dist-upgrade -y
 # We have migrated to Devuan so systemd related packages are not needed now.
 RUN apt-get purge systemd libnss-systemd || true
 
+# Install packages required for Molecule
+RUN apt-get install -y sudo python3
+
 # Now remove any packages orphaned by the migration process, and any unusable archives left over from your Debian install.
 RUN apt-get autoremove --purge
 RUN apt-get autoclean
