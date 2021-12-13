@@ -1,10 +1,16 @@
-# Migrate from Debian Buster to Beowulf
-FROM debian:buster
+# Migrate from Debian Bullseye to Chimaera
+FROM debian:bullseye
 
-# The first step is to change the sources.list to point to the Beowulf repositories.
+# Update the package lists from the Bullseye repositories.
+RUN apt-get update
+
+# Install CA certificates
+RUN apt-get install -y ca-certificates
+
+# Change the sources.list to point to the Chimaera repositories.
 COPY config/etc/apt/sources.list /etc/apt/sources.list
 
-# Update the package lists from the Beowulf repositories.
+# Update the package lists from the Chimaera repositories.
 RUN apt-get update --allow-insecure-repositories
 
 # The Devuan keyring should now be installed so that packages can be authenticated.
@@ -32,6 +38,6 @@ RUN apt-get purge systemd libnss-systemd || true
 RUN apt-get install -y sudo python3
 
 # Now remove any packages orphaned by the migration process, and any unusable archives left over from your Debian install.
-RUN apt-get autoremove --purge
+RUN apt-get autoremove --purge -y
 RUN apt-get autoclean
 RUN /bin/rm -fr /etc/systemd /lib/systemd
